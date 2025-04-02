@@ -9,9 +9,12 @@ import AboutMePage from './pages/AboutMePage'
 import CertificatesPage from './pages/CertificatesPage'
 import LoginPage from './pages/LoginPage'
 import AdminPage from './pages/AdminPage'
-import { Dashboard } from './pages/after-login pages'
+import { CounselingSession, Dashboard } from './pages/after-login pages'
+import ProgressTracking from './pages/after-login pages/ProgressTracking'
+import NutritionTracking from './pages/after-login pages/NutritionTracking'
 import Navbar from './components/Navbar'
 import Footer from './components/Footer'
+import UserProfile from './pages/after-login pages/counseling/UserProfile'
 
 const App = () => {
   return (
@@ -29,6 +32,11 @@ const App = () => {
           <Route path="/login" element={<LoginPage />} />
           <Route path="/admin" element={<AdminPage />} />
           <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/progress-tracking" element={<ProgressTracking />} />
+          <Route path="/nutrition-tracking" element={<NutritionTracking />} />
+          <Route path="/counseling-session" element={<CounselingSession />} />
+          {/* <Route path="/profile-summary" element={<ProfileSummary />} /> */}
+          <Route path="/user-profile" element={<UserProfile />} />
         </Routes>
         {/* <Footer /> */}
       </div>

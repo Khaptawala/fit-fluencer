@@ -48,7 +48,7 @@ import {
 } from '../../components/ui/dropdown-menu';
 
 // Enhanced progress chart component
-const CircularProgress = ({ value, size = 90, strokeWidth = 10, color, label }) => {
+export const CircularProgress = ({ value, size = 90, strokeWidth = 10, color, label }) => {
   const radius = (size - strokeWidth) / 2;
   const circumference = radius * 2 * Math.PI;
   const progress = ((100 - value) / 100) * circumference;
@@ -127,19 +127,33 @@ const MetricCard = ({ icon: Icon, title, value, trend, description, delay, color
 };
 
 // Sidebar navigation link
-const SidebarLink = ({ icon: Icon, label, active, onClick }) => (
-  <button 
-    onClick={onClick}
-    className={`flex items-center w-full py-2 px-3 rounded-lg transition-colors ${
-      active 
-        ? 'bg-emerald-100 text-emerald-800 font-medium' 
-        : 'text-slate-600 hover:bg-slate-100'
-    }`}
-  >
-    <Icon className={`h-5 w-5 mr-3 ${active ? 'text-emerald-600' : 'text-slate-500'}`} />
-    <span>{label}</span>
-  </button>
-);
+const SidebarLink = ({ icon: Icon, label, active, onClick, route }) => {
+  return route ? (
+    <Link 
+      to={route}
+      className={`flex items-center w-full py-2 px-3 rounded-lg transition-colors ${
+        active 
+          ? 'bg-emerald-100 text-emerald-800 font-medium' 
+          : 'text-slate-600 hover:bg-slate-100'
+      }`}
+    >
+      <Icon className={`h-5 w-5 mr-3 ${active ? 'text-emerald-600' : 'text-slate-500'}`} />
+      <span>{label}</span>
+    </Link>
+  ) : (
+    <button 
+      onClick={onClick}
+      className={`flex items-center w-full py-2 px-3 rounded-lg transition-colors ${
+        active 
+          ? 'bg-emerald-100 text-emerald-800 font-medium' 
+          : 'text-slate-600 hover:bg-slate-100'
+      }`}
+    >
+      <Icon className={`h-5 w-5 mr-3 ${active ? 'text-emerald-600' : 'text-slate-500'}`} />
+      <span>{label}</span>
+    </button>
+  );
+};
 
 const DashboardPage = () => {
   // Mock data
@@ -175,10 +189,13 @@ const DashboardPage = () => {
   const sidebarItems = [
     { icon: Home, label: 'Home', id: 'dashboard' },
     { icon: LayoutDashboard, label: 'Dashboard', id: 'dashboard-detail' },
+    { icon: User, label: 'Profile Summary', id: 'profile-summary', route: '/profile-summary' },
+    { icon: MessageCircle, label: 'Counseling Sessions', id: 'counseling-session', route: '/counseling-session' },
     { icon: Calendar, label: 'New Session', id: 'new-session' },
-    { icon: TrendingUp, label: 'Progress Tracking', id: 'progress-tracking' },
+    { icon: TrendingUp, label: 'Progress Tracking', id: 'progress-tracking', route: '/progress-tracking' },
     { icon: Coffee, label: 'Today\'s Meal Plan', id: 'meal-plan' },
     { icon: Dumbbell, label: 'Today\'s Workouts', id: 'workouts' },
+    { icon: PieChart, label: 'Daily Calories & Nutrition', id: 'nutrition-tracking', route: '/nutrition-tracking' },
   ];
 
   // User projects
@@ -305,6 +322,12 @@ const DashboardPage = () => {
             </div>
           </>
         );
+      case 'profile-summary':
+        // This will be handled by the router navigation
+        return null;
+      case 'counseling-session':
+        // This will be handled by the router navigation
+        return null;
       case 'new-session':
         return (
           <div className="h-64 flex items-center justify-center bg-slate-50 rounded-lg border border-slate-200">
@@ -312,11 +335,15 @@ const DashboardPage = () => {
           </div>
         );
       case 'progress-tracking':
-        return <ProgressTrackerCard delay={0.2} />;
+        // This will also be handled by router navigation
+        return null;
       case 'meal-plan':
         return <MealPlanCard delay={0.2} />;
       case 'workouts':
         return <WorkoutCard delay={0.2} />;
+      case 'nutrition-tracking':
+        // This will also be handled by router navigation
+        return null;
       default:
         return null;
     }
@@ -366,6 +393,7 @@ const DashboardPage = () => {
                   setActiveSection(item.id);
                   setSidebarOpen(false);
                 }}
+                route={item.route}
               />
             ))}
           </nav>
@@ -421,8 +449,10 @@ const DashboardPage = () => {
                     <span>Dashboard</span>
                   </DropdownMenuItem>
                   <DropdownMenuItem>
-                    <User className="mr-2 h-4 w-4" />
-                    <span>My Profile</span>
+                    <Link to="/user-profile" className="flex items-center w-full">
+                      <User className="mr-2 h-4 w-4" />
+                      <span>My Profile</span>
+                    </Link>
                   </DropdownMenuItem>
                   <DropdownMenuSeparator />
                   <DropdownMenuItem>
