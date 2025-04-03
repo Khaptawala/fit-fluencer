@@ -9,7 +9,7 @@ import AboutMePage from './pages/AboutMePage'
 import CertificatesPage from './pages/CertificatesPage'
 import LoginPage from './pages/LoginPage'
 import AdminPage from './pages/AdminPage'
-import { CounselingSession, Dashboard } from './pages/after-login pages'
+import { CounselingSession, Dashboard, ErrorPage } from './pages/after-login pages'
 import ProgressTracking from './pages/after-login pages/ProgressTracking'
 import NutritionTracking from './pages/after-login pages/NutritionTracking'
 import Navbar from './components/Navbar'
@@ -37,6 +37,8 @@ const App = () => {
           <Route path="/counseling-session" element={<CounselingSession />} />
           {/* <Route path="/profile-summary" element={<ProfileSummary />} /> */}
           <Route path="/user-profile" element={<UserProfile />} />
+          {/* 404 Error page - must be the last route */}
+          <Route path="*" element={<ErrorPage />} />
         </Routes>
         {/* <Footer /> */}
       </div>

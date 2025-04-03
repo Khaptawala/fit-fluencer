@@ -4,6 +4,7 @@ import NutritionTracking from './NutritionTracking';
 import ProfileSummary from './ProfileSummary';
 import CounselingSession from './CounselingSession';
 import UserProfile from './counseling/UserProfile';
+import ErrorPage from './ErrorPage';
 
 export {
   Dashboard,
@@ -11,5 +12,6 @@ export {
   NutritionTracking,
   ProfileSummary,
   CounselingSession,
-  UserProfile
+  UserProfile,
+  ErrorPage
 }; 
