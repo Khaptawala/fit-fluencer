@@ -15,6 +15,7 @@ import Navbar from './components/Navbar'
 import Footer from './components/Footer'
 import UserProfile from './pages/after-login pages/counseling/UserProfile'
 import RegisterPage from './pages/after-login pages/RegisterPage'
+import PlansPage from './pages/after-login pages/PlansPage'
 
 const App = () => {
   return (
@@ -35,6 +36,7 @@ const App = () => {
           <Route path="/nutrition-tracking" element={<NutritionTracking />} />
           <Route path="/counseling-session" element={<CounselingSession />} />
           <Route path="/register" element={<RegisterPage />} />
+          <Route path="/plans" element={<PlansPage />} />
           {/* <Route path="/profile-summary" element={<ProfileSummary />} /> */}
           <Route path="/user-profile" element={<UserProfile />} />
           {/* 404 Error page - must be the last route */}
