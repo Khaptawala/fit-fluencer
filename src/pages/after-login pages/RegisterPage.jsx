@@ -1,10 +1,10 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import * as z from 'zod'
 import { motion } from 'framer-motion'
 import { toast } from 'react-hot-toast'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useLocation } from 'react-router-dom'
 import { 
   UserIcon, 
   MapPinIcon, 
@@ -52,8 +52,36 @@ const steps = [
 
 const RegisterPage = () => {
   const navigate = useNavigate()
+  const location = useLocation()
   const [currentStep, setCurrentStep] = useState(0)
   const [animationDirection, setAnimationDirection] = useState('forward')
+  const [creator, setCreator] = useState('')
+  const [role, setRole] = useState('')
+  
+  // Parse URL parameters to get creator and role
+  useEffect(() => {
+    const params = new URLSearchParams(location.search)
+    
+    const creatorParam = params.get('creator')
+    const roleParam = params.get('role')
+    
+    // Validate URL parameters
+    if (!creatorParam || !['client', 'dietitian'].includes(roleParam)) {
+      // Invalid parameters, redirect to invalid link page
+      navigate('/invalid-link')
+      return
+    }
+    
+    // Set creator and role from valid parameters
+    setCreator(decodeURIComponent(creatorParam))
+    setRole(roleParam)
+    
+    // Pre-fill email field if it exists in the URL
+    const emailParam = params.get('email')
+    if (emailParam) {
+      form.setValue('email', emailParam)
+    }
+  }, [location])
   
   const form = useForm({
     resolver: zodResolver(formSchema),
@@ -104,7 +132,14 @@ const RegisterPage = () => {
   }
 
   const onSubmit = (data) => {
-    console.log(data)
+    // Add creator and role to the submitted data
+    const submissionData = {
+      ...data,
+      invitedBy: creator,
+      role: role
+    }
+    
+    console.log(submissionData)
     toast.success("Registration successful!")
     // Redirect to dashboard or next step
     setTimeout(() => navigate('/dashboard'), 1500)
@@ -526,6 +561,11 @@ const RegisterPage = () => {
         <h1 className="text-3xl md:text-4xl font-bold text-emerald-700">
           Create Your FitFluencer Profile
         </h1>
+        {creator && role && (
+          <p className="text-gray-500 mt-2">
+            You've been invited by <span className="font-medium text-emerald-600">{creator}</span> to join as a <span className="font-medium text-emerald-600 capitalize">{role}</span>
+          </p>
+        )}
         <p className="text-gray-500 mt-2">Join our community of fitness enthusiasts and begin your transformation journey</p>
       </motion.div>
 
