@@ -18,6 +18,8 @@ import RegisterPage from './pages/after-login pages/RegisterPage'
 import PlansPage from './pages/after-login pages/PlansPage'
 import InvalidLink from './pages/after-login pages/InvalidLink'
 import ViewTeam from './pages/after-login pages/ViewTeam'
+import PaymentHistory from './pages/after-login pages/PaymentHistory'
+import ProfileSummary from './pages/after-login pages/ProfileSummary'
 
 const App = () => {
   return (
@@ -41,10 +43,11 @@ const App = () => {
           <Route path="/plans" element={<PlansPage />} />
           <Route path="/invalid-link" element={<InvalidLink />} />
           <Route path="/view-team" element={<ViewTeam />} />
-          {/* <Route path="/profile-summary" element={<ProfileSummary />} /> */}
           <Route path="/user-profile" element={<UserProfile />} />
           {/* 404 Error page - must be the last route */}
           <Route path="*" element={<ErrorPage />} />
+          <Route path="/profile-summary" element={<ProfileSummary />} />
+          <Route path="/payment-history" element={<PaymentHistory />} />
           
 
         </Routes>
